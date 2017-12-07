@@ -1,0 +1,12 @@
+The quality contron of NGS data can be performed by following the instructions provided in R codes. There are Three rscripts that should be used step-wise-step to perfom QC analysis:
+
+First file, File1_ApplyinheritanceQC.r takes the VCF files and calculates the IBS between sample pairs. We suggest you split VCF files per chromosome so it is easier to read large VCF files and help process run faster processing the SNPs in chunks. Also, you may want to change 'num.cores' to change the number of cores you want to use for this process. The output files have number of unfiltered and filtered SNPs in the file names. This code starts to calculate IBS starting from 1000 unfiltered SNPs. The number of SNPs fed for IBS calculation is doubled until all SNPs are used for IBS calculation. Hence, we suggest you to use the File with maximum number of unfiltered SNPs (i.e final output file) to be used for your Final analysis. The output files are both 'RELATED' pairs (as labelled in output file name) and file with all sample pair. The RELATED pairs are defined as those pairs with IBS >= 0.06. You only need final output file with 'RELATED' pairs for this method. This file uses 'hwe.r' and 'annotate_SNPs_subroutines.r' subroutines and should be read in the code with correct path. The output files are saved in 'path.save' directory.
+
+Second file, File2_Population_stratification.r is rscripts that can be used to perform PCA analysis and along with detailed instructions for methods to correct for population stratification. We suggest you to carefully read the comments made in this file as it tells you how to manipulate your data files using tools like plink, plink2, shellfish, GATK and piccard tools required for this method. 
+
+Third file, File3_Plot_PCA_and_infer_ethnicity_4d.r is rscript that should be used to plot PCA, and infer ethnicity of individuals. Read final and 'RELATED' output file  from File1_ApplyinheritanceQC.r in this script. We use first 4 PCs to calculate euclidean distance between the case  samples and HapMap samples to infer the ethnicity of samples which will be copied to the output file.
+
+Note: Please run all three files ('File1_ApplyinheritanceQC.r', 'File2_Population_stratification.r' and 'File3_Plot_PCA_and_infer_ethnicity_4d.r') line by line so you won't miss anything while processing, reading or handling the data files as instructed in these codes. 
+
+ 
+
